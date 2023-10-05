@@ -17,11 +17,18 @@ contract MyToken {
     }
 
     function mint(address _to, uint256 _value) public {
+        require(_to != address(0), "Invalid address");
+        require(_value > 0, "Invalid value");
+
         totalSupply += _value;
         balances[_to] += _value;
     }
 
     function burn(address _from, uint256 _value) public {
+        require(_from != address(0), "Invalid address");
+        require(_value > 0, "Invalid value");
+        require(balances[_from] >= _value, "Insufficient balance");
+
         totalSupply -= _value;
         balances[_from] -= _value;
     }
